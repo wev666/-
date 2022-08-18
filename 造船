@@ -1,0 +1,66 @@
+local Library = loadstring(game:HttpGet("https://textbin.net/raw/t8opsngf6d"))()
+local Window = Library.CreateLib("白", 'Ocean')
+local Tab = Window:NewTab("主要功能")
+local Section1 = Tab:NewSection("变鸡")
+local Section2 = Tab:NewSection("变狐狸")
+local Section3 = Tab:NewSection("变企鹅")
+local Section4 = Tab:NewSection("刷钱")
+    Section1:NewButton("开始", "ButtonInfo", function()
+        local players = game:GetService("Players")
+        local client = players.LocalPlayer
+        local Chicken = workspace:WaitForChild("ChangeCharacter")
+        Chicken:FireServer("ChickenCharacter")
+   
+    end)
+    Section2:NewButton("开始", "ButtonInfo", function()
+        local players = game:GetService("Players")
+    local client = players.LocalPlayer
+    local fox = workspace:WaitForChild("ChangeCharacter")
+    fox:FireServer("FoxCharacter")
+      
+    end)
+    Section3:NewButton("开始", "ButtonInfo", function()
+        local players = game:GetService("Players")
+        local client = players.LocalPlayer
+        local penguin = workspace:WaitForChild("ChangeCharacter")
+        penguin:FireServer("PenguinCharacter")
+    
+    end)
+    Section4:NewButton("开始", "ButtonInfo", function()
+        local players = game:GetService("Players")
+        local stages = workspace:WaitForChild("BoatStages"):WaitForChild("NormalStages")
+        local penguin, gold = workspace:WaitForChild("ChangeCharacter"), workspace:WaitForChild("ClaimRiverResultsGold")
+        local client = players.LocalPlayer
+        _G.Busy = true
+        while _G.Busy do
+            local bodyVelocity = Instance.new("BodyVelocity")
+            bodyVelocity.Velocity = Vector3.new(0, -4, 0)
+            bodyVelocity.Parent = client.Character.HumanoidRootPart
+        
+            for i = 1, 9 do
+                if not client.Character or not client.Character:FindFirstChild("Humanoid") then
+                    repeat wait() until client.Character and client.Character:FindFirstChild("Humanoid")
+                end
+         
+                client.Character.HumanoidRootPart.CFrame = stages["CaveStage"..i].DarknessPart.CFrame wait(0.1)
+        
+                if not _G.Busy then
+                    client.Character.Humanoid.Health = 0
+                    exit(0)
+                end
+        
+                if i == 1 then
+                    wait(4)
+                else
+                    wait(2)
+                end
+        
+                gold:FireServer()
+            end
+            penguin:FireServer("ChickenCharacter")
+            client.Character:Remove()
+            repeat wait() 
+            until client.Character and client.Character:FindFirstChild("HumanoidRootPart")
+        end
+     
+    end)
