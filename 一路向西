@@ -1,0 +1,293 @@
+local bai={
+	jiuli=20,
+	awaysday = false,
+	awaysdnight = false,
+	autofarm=false,
+	playernamedied=""
+  }
+
+		
+local Workspace = game:GetService('Workspace')
+local ReplicatedStorage = game:GetService('ReplicatedStorage')
+local Players = game:GetService('Players')
+local RunService = game:GetService('RunService')
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character
+local HumanoidRootPart = Character.HumanoidRootPart
+local States = LocalPlayer:FindFirstChild('States')
+local Stats = LocalPlayer:FindFirstChild('Stats')
+local GeneralEvents = ReplicatedStorage:FindFirstChild('GeneralEvents')
+local RobRemote = GeneralEvents:FindFirstChild('Rob')
+local ChangeCharacter = Character:FindFirstChild('ChangeCharacter')
+local BagLevel = Stats:FindFirstChild('BagSizeLevel'):FindFirstChild('CurrentAmount')
+local BagAmount = States:FindFirstChild('Bag')
+local Camp = CFrame.new(1636.62537, 104.349976, -1736.184)
+local CashRegisterFinished = false
+local BankFinished = false
+local function TeleportToCamp()
+	local Players = game:GetService('Players')
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character
+local HumanoidRootPart = Character.HumanoidRootPart
+    HumanoidRootPart.CFrame = Camp
+end
+local function tp(cf)
+	local Players = game:GetService('Players')
+
+local LocalPlayer = Players.LocalPlayer
+local Character = LocalPlayer.Character
+local HumanoidRootPart = Character.HumanoidRootPart
+    HumanoidRootPart.CFrame = cf
+end
+local function Godmode()
+    ChangeCharacter:FireServer('Damage', 0/0)
+end
+local function HideName()
+    Character:FindFirstChild('Head'):FindFirstChild('NameTag'):Destroy()
+end
+
+local function CashRegisterFarm()
+    for _, Item in next, Workspace:GetChildren() do
+        if BagAmount.Value == BagLevel.Value then 
+            TeleportToCamp()
+            CashRegisterFinished = true
+            break
+        elseif Item:IsA('Model') and Item.Name == 'CashRegister' then
+            HumanoidRootPart.CFrame = Item:FindFirstChild('Open').CFrame
+            RobRemote:FireServer('Register', {['Part'] = Item:FindFirstChild('Union'), ['OpenPart'] = Item:FindFirstChild('Open'), ['ActiveValue'] = Item:FindFirstChild('Active'), ['Active'] = true})
+        end
+    end    
+    CashRegisterFinished = true
+end
+
+local function BankFarm()
+    for _, Item in next, Workspace:GetChildren() do
+        if BagAmount.Value == BagLevel.Value then 
+            TeleportToCamp()
+            BankFinished = true
+            break
+        elseif Item:IsA('Model') and Item.Name == 'Safe' and Item:FindFirstChild('Amount').Value > 0 then
+            if Item:FindFirstChild('Open').Value == true then
+                HumanoidRootPart.CFrame = Item:FindFirstChild('Safe').CFrame
+                RobRemote:FireServer('Safe', Item)
+            elseif Item:FindFirstChild('Open').Value == false then
+                HumanoidRootPart.CFrame = Item:FindFirstChild('Safe').CFrame
+                Item:FindFirstChild('OpenSafe'):FireServer('Completed')
+                RobRemote:FireServer('Safe', Item)
+            end
+        end
+    end
+    BankFinished = true
+end
+Godmode()
+HideName()
+
+
+  local Nax = {
+	  
+	['gs'] = function(...)
+		return game:GetService(...)
+	end;
+	['me'] = game:service 'Players'.LocalPlayer;
+  
+   
+  };
+  Nax['Remote'] = {
+	['RS'] = Nax.gs 'ReplicatedStorage';
+	['RunService'] = Nax.gs 'RunService';
+	['Light'] = Nax.gs 'Lighting';
+	['Workspace'] = Nax.gs 'Workspace';
+  };
+  Nax['Boolean'] = {
+	['Collide'] = nil;
+	['Noclip'] = false;
+  };
+  Nax['Setting'] = {
+  ['GunStats'] = require(Nax.Remote.RS.GunScripts.GunStats)
+  
+  };
+  
+  
+  function Nax:Noclip()
+	self['Boolean'].Collide = self['Remote'].RunService.Stepped:Connect(
+		function()
+			for i, v in next, self['me'].Character:children() do
+				if self['Boolean'].Noclip == false then
+					self['Boolean'].Collide:Disconnect()
+					return
+				end
+				if v:IsA('BasePart') then
+					v.CanCollide = false
+				end
+			end
+		end
+	)
+  end
+  NaxBypass = hookmetamethod(
+	  game,
+	  "__index",
+	  function(Self, Human)
+		  if not checkcaller() and tostring(Self) == "Humanoid" and Human == "WalkSpeed" then
+			  return 16
+		  elseif not checkcaller() and tostring(Self) == "Humanoid" and Human == "JumpPower" then
+			  return 50
+		  end
+		  return NaxBypass(Self, Human)
+	  end
+  )
+  local Library = loadstring(game:HttpGet("https://pastebin.com/raw/UjsFgNr3"))()
+  local Window = Library.CreateLib("白", "Ocean")
+  local Tab1= Window:NewTab("玩家")
+  local Tab= Window:NewTab("主要功能")
+  local Section = Tab:NewSection("枪支")
+  local Section3 = Tab1:NewSection("速度/跳跃提升")
+  Section3:NewTextBox("速度", "提升速度", function(txt)
+	spawn(function()
+	  while task.wait(.01) do
+		Nax.me.Character.Humanoid.WalkSpeed = txt
+	  end
+  end)
+  end)
+  Section3:NewTextBox("跳跃提升", "提升跳跃", function(txt)
+	spawn(function()
+	  while task.wait(.01) do
+		Nax.me.Character.Humanoid.JumpPower = txt
+	  end
+  end)
+  end)
+  Section3:NewToggle("穿墙", "穿过墙壁", function(state)
+	Nax.Boolean.Noclip = state
+	Nax:Noclip()
+  end)
+  Section3:NewButton("解锁最大焦距", "可以无限拉视角", function()
+	Nax.me.CameraMaxZoomDistance = 9e9
+  end)
+  Section:NewButton("超级枪", "魔改枪械", function()
+	for i, Guns in next,Nax.Setting['GunStats'] do
+		  Guns.Damage = math.huge;
+		  Guns.camShakeResist = math.huge;
+		  Guns.prepTime = .01;
+		  Guns.equipTime = .01;
+		  Guns.MaxShots = math.huge;
+		  Guns.ReloadAnimationSpeed = .01;
+		  Guns.ReloadSpeed = .00000001;
+		  Guns.ZoomAccuracy = math.huge; 
+		  Guns.EquipDelay = .01;
+		  end
+  end)
+  Section:NewTextBox("放大的大小", "自定义放大的大小", function(txt)
+	  bai.jiuli=txt
+  end)
+  
+  Section:NewButton("放大别人的身体", "更加容易命中", function(state)
+   
+  game:GetService('RunService').RenderStepped:connect(function()
+	if _G.Disabled then
+	for i,v in next, game:GetService('Players'):GetPlayers() do
+	if v.Name ~= game:GetService('Players').LocalPlayer.Name then
+	pcall(function()
+	v.Character.HumanoidRootPart.Size = Vector3.new(_G.HeadSize,_G.HeadSize,_G.HeadSize)
+	v.Character.HumanoidRootPart.Transparency = 0.7
+	v.Character.HumanoidRootPart.BrickColor = BrickColor.new("Really blue")
+	v.Character.HumanoidRootPart.Material = "Neon"
+	v.Character.HumanoidRootPart.CanCollide = false
+	end)
+	end
+	end
+	end
+	end)
+  
+  end)
+  Section:NewButton("透视", "透视所有人", function()
+	Nax['Esp'] = Instance.new("BillboardGui",game.CoreGui)
+	Nax['EspLable'] = Instance.new("TextLabel", Nax['Esp'])
+	Nax['Esp'].ResetOnSpawn = false;
+	Nax['Esp'].AlwaysOnTop = true;
+	Nax['Esp'].LightInfluence = 0;
+	Nax['Esp'].Size = UDim2.new(1.75, 0, 1.75, 0);
+	Nax['EspLable'].Text = "";
+	Nax['EspLable'].Size = UDim2.new(0.0001, 0.00001, 0.0001, 0.00001);
+	Nax['EspLable'].BorderColor3 = Nax['Color'].White;
+	Nax['EspLable'].TextSize = 20;
+	Nax['EspLable'].TextColor3 = Nax['Color'].White;
+	Nax.Remote.RunService.RenderStepped:Connect(function()
+		for i, v in next, Nax.gs 'Players':GetPlayers() do
+			if v ~= Nax.me then
+				Nax['EspLable'].Text = "玩家用户名 : " .. tostring(v.Name)
+			end
+		end
+	end)
+  
+  end)
+  Section:NewToggle("终日白天", "把时间变成中午", function(state)
+	  if state then 
+		  bai.awaysday=true
+		  while task.wait() do
+		  if bai.awaysday==true then 
+			  game:GetService('Lighting').TimeOfDay=('12:00:00');
+		  end
+	  end
+  else bai.awaysday=false
+	  end
+	  
+  end)
+  Section:NewToggle("终日黑天", "把时间变成午夜",  function(state)
+	  if state then 
+		  bai.awaysdnight=true
+		  while task.wait() do
+		  if bai.awaysdnight==true then 
+			  game:GetService('Lighting').TimeOfDay=('2:00:00');
+		  end
+	  end
+	  else
+		  bai.awaysdnight=false
+	  end
+	end)
+	Section:NewToggle("刷钱", "快速刷钱", function(state)
+		if state then
+			bai.autofarm=true
+			RunService.RenderStepped:Connect(function()
+				if bai.autofarm==true then
+				coroutine.wrap(BankFarm)()
+				coroutine.wrap(CashRegisterFarm)()
+				end
+				repeat task.wait() until CashRegisterFinished == true
+			end)
+		else
+		bai.autofarm=false
+		end
+	end)
+	local oldList = {
+		
+	}
+	for i, v in pairs(game:GetService('Players'):GetPlayers()) do
+		table.insert(oldList, v.Name)
+		end
+	
+	
+		  local newList = {
+			
+		  }
+	  local dropdown = Section:NewDropdown("玩家名字","选择玩家名字已开始下面的功能",oldList, function(v)
+		bai.playernamedied=v
+	  end)
+	  Section:NewButton("重置玩家名字", "重新获得服务器玩家名字", function()
+	local newList = {	
+		  }
+		for i, v in pairs(game:GetService('Players'):GetPlayers()) do
+			table.insert(newList , v.Name)
+			end
+		
+		dropdown:Refresh(newList)
+	  end)
+	  Section:NewButton("传送到玩家旁边", "出现在玩家旁边", function()
+	
+		local tp_player = game:GetService("Players")[bai.playernamedied]
+	   
+		if tp_player then
+				for i = 1,5 do
+			wait()
+			tp(tp_player.Character.HumanoidRootPart.CFrame + Vector3.new(0, 3, 0))
+			end
+		end
+	end)
