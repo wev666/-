@@ -1,0 +1,128 @@
+local Library = loadstring(game:HttpGet("https://textbin.net/raw/t8opsngf6d"))()
+local Window = Library.CreateLib("白", "Ocean")
+local Tab = Window:NewTab("主要功能")
+local Section = Tab:NewSection("自动功能")
+
+
+
+Section:NewToggle("自动点击", "快速点击", function(state)
+if Section.Text == "关"
+then Section.Text ="开"
+ 
+else Section.Text ="关"
+end
+ 
+
+while task.wait() do
+	if state then
+    if Section.Text =="关" then
+        game:GetService("ReplicatedStorage").RemoteEvent:FireServer({"Activate_Punch"})
+
+
+	
+    end
+    end
+    end
+    end)
+	Section:NewToggle("自动吸经验", "快速吸经验", function(state)
+		if Section.Text == "关1"
+		then Section.Text ="开1"
+		   
+		else Section.Text ="关1"
+		end
+		 
+		world = ""
+		allow = true
+        if state then
+		while wait(math.random(1,3)) do
+		    
+			if Section.Text == "关1" then
+			     
+                if allow == true then
+					allow = false
+					function ClosestPart()
+						local dist = math.huge
+						local target = nil
+						for i,v in pairs(game:GetService("Workspace").Map.Stages.Boosts:GetDescendants()) do
+							if v.ClassName == "TouchTransmitter" then
+								local magnitude = (v.Parent.Position - game:GetService("Players").LocalPlayer.Character.Head.Position).magnitude
+								if magnitude < dist then
+									dist = magnitude
+									target = v.Parent
+								end
+							end
+						end
+						return target
+					end
+					world = ClosestPart().Parent.Parent
+					function ClosestPart1()
+						local dist = math.huge
+						local target = nil
+						for i,v in pairs(game:GetService("Workspace").Map.Stages.Boosts:GetChildren()) do
+							if tostring(v.Name) == tostring(world) then
+								for i,v1 in pairs(v:GetChildren()) do
+									for i,v2 in pairs(v1:GetChildren()) do
+										for i,v3 in pairs(v2:GetChildren()) do
+											if v3.ClassName == "TouchTransmitter" then
+												if v3.Parent.Transparency ~= 1 then
+													local magnitude = (v3.Parent.Position - game:GetService("Players").LocalPlayer.Character.Head.Position).magnitude
+													if magnitude < dist then
+														dist = magnitude
+														target = v3.Parent
+													end
+												end
+											end
+										end
+									end
+								end
+							end
+						end
+						return target
+					end
+				end
+				pcall(function()
+					ClosestPart1().CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame + Vector3.new(0,0,0)
+				end)
+			end
+		end
+    
+    end
+	end)
+    Section:NewToggle("自动去下一个地图", "快速前往下一个地图", function(state)
+        if Section.Text == "关2"
+        then Section.Text ="开2"
+         
+        else Section.Text ="关2"
+        end
+         
+        
+        while task.wait() do
+            if state then
+            if Section.Text =="关2" then
+                firesignal(game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui["Menu_Frame"]["MapTeleportation_Frame"]["NextMap_ImgBtn"].Activated)
+            
+            end
+            end
+            end
+            end)
+            Section:NewToggle("自动升级宠物", "快速升级宠物", function(state)
+                if Section.Text == "关3"
+                then Section.Text ="开3"
+                 
+                else Section.Text ="关3"
+                end
+                 
+                
+                while task.wait() do
+                    if state then
+                    if Section.Text =="关3" then
+                        firesignal(game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui["Pet_Frame"]["UpgradePet_Btn"].Activated)
+                    
+                    end
+                    end
+                    end
+                    end)
+        
+
+
+
