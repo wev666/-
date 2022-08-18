@@ -1,0 +1,317 @@
+local HumanoidRP = game.Players.LocalPlayer.Character.HumanoidRootPart
+local Library = loadstring(game:HttpGet("https://pastebin.com/raw/UjsFgNr3"))()
+local Window = Library.CreateLib("白", "Midnight")
+local Tab = Window:NewTab("主要功能")
+local Section = Tab:NewSection("挂机自动飞行(和汽车飞行脚本不一样)")
+local Section1 = Tab:NewSection("汽车飞行脚本(不能挂机刷钱)")
+local Section2 = Tab:NewSection("自动比赛")
+
+
+Section:NewTextBox("输入汽车最大速度", "在汽车说明里面的速度选项", function(txt)
+    local BV = Instance.new("BodyVelocity",HumanoidRP)
+	local BG = Instance.new("BodyGyro",HumanoidRP)
+	BG.MaxTorque = Vector3.new(math.huge,math.huge,math.huge)
+	BG.D = 5000
+	BG.P = 50000
+	BG.CFrame = game.Workspace.CurrentCamera.CFrame
+	BV.MaxForce = Vector3.new(math.huge,math.huge,math.huge)
+	while task.wait() do
+        
+        HumanoidRP.Anchored = false
+		HumanoidRP:FindFirstChildOfClass("BodyVelocity"):Destroy()
+		HumanoidRP:FindFirstChildOfClass("BodyGyro"):Destroy()
+		wait(.1)
+		local BV = Instance.new("BodyVelocity",HumanoidRP)
+		local BG = Instance.new("BodyGyro",HumanoidRP)
+		BG.MaxTorque = Vector3.new(math.huge,math.huge,math.huge)
+		BG.D = 50000
+		BG.P = 50000
+		BG.CFrame = game.Workspace.CurrentCamera.CFrame
+		BV.MaxForce = Vector3.new(math.huge,math.huge,math.huge)
+		BV.Velocity = game.Workspace.CurrentCamera.CFrame.LookVector * txt
+    
+    end
+end)
+Section:NewButton("停止飞行", "没有说明", function()
+  HumanoidRP:FindFirstChildOfClass("BodyVelocity"):Destroy()
+	HumanoidRP:FindFirstChildOfClass("BodyGyro"):Destroy()
+end)
+Section:NewButton("出现", "没有说明", function()
+
+
+local HumanoidRP = game.Players.LocalPlayer.Character.HumanoidRootPart
+
+local ScreenGui = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local TextBox = Instance.new("TextBox")
+local TextButton_2 = Instance.new("TextButton")
+local TextButton_3 = Instance.new("TextButton")
+local TextButton_5 = Instance.new("TextButton")
+local W = Instance.new("TextButton")
+local S = Instance.new("TextButton")
+local A = Instance.new("TextButton")
+local D = Instance.new("TextButton")
+--Properties:
+
+ScreenGui.Parent = game.CoreGui
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+Frame.Parent = ScreenGui
+Frame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Frame.Position = UDim2.new(0.371573567, 0, 0.357452959, 0)
+Frame.Size = UDim2.new(0, 253, 0, 168)
+Frame.Active = true
+Frame.Draggable = true
+
+TextBox.Parent = Frame
+TextBox.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextBox.Position = UDim2.new(0.171184361, 0, 0.266694188, 0)
+TextBox.Size = UDim2.new(0, 165, 0, 39)
+TextBox.Font = Enum.Font.SourceSans
+TextBox.Text = "225"
+TextBox.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextBox.TextScaled = true
+TextBox.TextSize = 14.000
+TextBox.TextWrapped = true
+
+
+
+                W.Name = "W"
+	W.Parent = ScreenGui
+	W.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	W.Position = UDim2.new(0.161668837, 0, 0.601604283, 0)
+	W.Size = UDim2.new(0, 58, 0, 50)
+	W.Font = Enum.Font.SourceSans
+	W.Text = "↑"
+	W.TextColor3 = Color3.fromRGB(0, 0, 0)
+	W.TextScaled = true
+	W.TextSize = 5.000
+	W.TextWrapped = true
+	W.MouseButton1Down:Connect(function()
+local Speed = TextBox.Text
+		HumanoidRP.Anchored = false
+		HumanoidRP:FindFirstChildOfClass("BodyVelocity"):Destroy()
+		HumanoidRP:FindFirstChildOfClass("BodyGyro"):Destroy()
+		wait(.1)
+		local BV = Instance.new("BodyVelocity",HumanoidRP)
+		local BG = Instance.new("BodyGyro",HumanoidRP)
+		BG.MaxTorque = Vector3.new(math.huge,math.huge,math.huge)
+		BG.D = 50000
+		BG.P = 50000
+		BG.CFrame = game.Workspace.CurrentCamera.CFrame
+		BV.MaxForce = Vector3.new(math.huge,math.huge,math.huge)
+		BV.Velocity = game.Workspace.CurrentCamera.CFrame.LookVector * Speed
+	end)
+
+TextButton_2.Parent = Frame
+TextButton_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextButton_2.Position = UDim2.new(0.570490181, 0, 0.622665584, 0)
+TextButton_2.Size = UDim2.new(0, 82, 0, 50)
+TextButton_2.Font = Enum.Font.SourceSans
+TextButton_2.Text = "停止飞行"
+TextButton_2.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextButton_2.TextScaled = true
+TextButton_2.TextSize = 14.000
+TextButton_2.TextWrapped = true
+TextButton_2.MouseButton1Down:Connect(function()
+	HumanoidRP:FindFirstChildOfClass("BodyVelocity"):Destroy()
+	HumanoidRP:FindFirstChildOfClass("BodyGyro"):Destroy()
+end)
+
+
+TextButton_3.Parent = Frame
+TextButton_3.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextButton_3.Position = UDim2.new(0.10424751, 0, 0.622665584, 0)
+TextButton_3.Size = UDim2.new(0, 82, 0, 50)
+TextButton_3.Font = Enum.Font.SourceSans
+TextButton_3.Text = "开始飞行"
+TextButton_3.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextButton_3.TextScaled = true
+TextButton_3.TextSize = 14.000
+TextButton_3.TextWrapped = true
+TextButton_3.MouseButton1Down:Connect(function()
+	local BV = Instance.new("BodyVelocity",HumanoidRP)
+	local BG = Instance.new("BodyGyro",HumanoidRP)
+	BG.MaxTorque = Vector3.new(math.huge,math.huge,math.huge)
+	BG.D = 5000
+	BG.P = 50000
+	BG.CFrame = game.Workspace.CurrentCamera.CFrame
+	BV.MaxForce = Vector3.new(math.huge,math.huge,math.huge)
+end)
+
+
+S.Name = "S"
+	S.Parent = ScreenGui
+	S.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	S.Position = UDim2.new(0.161668837, 0, 0.735294104, 0)
+	S.Size = UDim2.new(0, 58, 0, 50)
+	S.Font = Enum.Font.SourceSans
+	S.Text = "↓"
+	S.TextColor3 = Color3.fromRGB(0, 0, 0)
+	S.TextScaled = true
+	S.TextSize = 14.000
+	S.TextWrapped = true
+	S.MouseButton1Down:Connect(function()
+local Speed = TextBox.Text
+		HumanoidRP.Anchored = false
+		HumanoidRP:FindFirstChildOfClass("BodyVelocity"):Destroy()
+		HumanoidRP:FindFirstChildOfClass("BodyGyro"):Destroy()
+		wait(.1)
+		local BV = Instance.new("BodyVelocity",HumanoidRP)
+		local BG = Instance.new("BodyGyro",HumanoidRP)
+		BG.MaxTorque = Vector3.new(math.huge,math.huge,math.huge)
+		BG.D = 5000
+		BG.P = 50000
+		BG.CFrame = game.Workspace.CurrentCamera.CFrame
+		BV.MaxForce = Vector3.new(math.huge,math.huge,math.huge)
+		BV.Velocity = game.Workspace.CurrentCamera.CFrame.LookVector * -Speed
+	end)
+
+TextButton_5.Parent = Frame
+TextButton_5.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextButton_5.Position = UDim2.new(0.857715547, 0, -0.00564226508, 0)
+TextButton_5.Size = UDim2.new(0, 35, 0, 35)
+TextButton_5.Font = Enum.Font.SourceSans
+TextButton_5.Text = "X"
+TextButton_5.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextButton_5.TextScaled = true
+TextButton_5.TextSize = 14.000
+TextButton_5.TextWrapped = true
+TextButton_5.MouseButton1Down:Connect(function()
+	Frame.Visible = false
+end)
+end)
+Section1:NewTextBox("输入汽车最大速度", "在汽车说明里面的速度选项", function(x)
+while( true )
+    do
+        game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
+            game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChildOfClass("BodyVelocity"):Destroy()
+            game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChildOfClass("BodyGyro"):Destroy()
+            wait()
+            local BV = Instance.new("BodyVelocity",game.Players.LocalPlayer.Character.HumanoidRootPart)
+            local BG = Instance.new("BodyGyro",game.Players.LocalPlayer.Character.HumanoidRootPart)
+            BG.MaxTorque = Vector3.new(math.huge,math.huge,math.huge)
+            BG.D = 5000
+            BG.P = 50000
+            BG.CFrame = game.Workspace.CurrentCamera.CFrame
+            BV.MaxForce = Vector3.new(math.huge,math.huge,math.huge)
+            BV.Velocity = game.Workspace.CurrentCamera.CFrame.LookVector * x
+            end
+end)
+Section1:NewToggle("飞行开关", "ToggleInfo", function(state)
+    if state then
+        local BV = Instance.new("BodyVelocity",game.Players.LocalPlayer.Character.HumanoidRootPart)
+		local BG = Instance.new("BodyGyro",game.Players.LocalPlayer.Character.HumanoidRootPart)
+		BG.MaxTorque = Vector3.new(math.huge,math.huge,math.huge)
+		BG.D = 5000
+		BG.P = 50000
+		BG.CFrame = game.Workspace.CurrentCamera.CFrame
+		BV.MaxForce = Vector3.new(math.huge,math.huge,math.huge)
+    else
+        game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChildOfClass("BodyVelocity"):Destroy()
+		game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChildOfClass("BodyGyro"):Destroy()
+    end
+end)
+Section1:NewButton("飞行食用说明", "ButtonInfo", function()
+    game:GetService("StarterGui"):SetCore("SendNotification",{     
+        Title = "说明",     
+        Text =   "1，飞行速度不能超过汽车最高速度超过就不给钱2，要先开启飞行再输入飞行速度",
+        Button1 = "知道了", Duration = 30, })
+end)
+Section2:NewToggle("自动比赛", "快速完成比赛", function(state)
+
+if Section2.Text == "关"
+then Section2.Text ="开"
+else Section2.Text ="关"
+end
+ 
+
+
+if state then
+local vu = game:GetService("VirtualUser")
+game:GetService("Players").LocalPlayer.Idled:connect(function()
+    vu:Button2Down(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+    wait(1)
+    vu:Button2Up(Vector2.new(0,0),workspace.CurrentCamera.CFrame)
+end)
+
+
+
+
+local RaceLocation = Vector3.new(2198.93701, 638.532166, 1307.18494, -4.76837158e-05, -0.996190667, -0.0872024298, -1, 4.76837158e-05, 2.08243728e-06, 2.08243728e-06, 0.0872024298, -0.996190667)
+
+
+
+local IsA = game.IsA
+local function GetFromPlayerCar()
+    for I,V in pairs(game:GetService("Workspace").Cars:GetDescendants()) do 
+        if V.Name == "Owner" then 
+            if V.Value == game.Players.LocalPlayer.Name then 
+                return V.Parent.Parent
+            end
+        end
+    end
+    return "Not Find Car"
+end
+
+local function TpCar(Pos)
+    for I,V in pairs(GetFromPlayerCar():GetDescendants()) do 
+        if IsA(V,"BasePart") then 
+            if Section2.Text == "关"then
+                local Tween = game:GetService("TweenService")
+                Tween:create(V,TweenInfo.new(1),{CFrame = CFrame.new(Pos)}):Play()
+            end
+        end
+    end
+end
+
+
+local function RaceFarm()
+    for I,V in pairs(game:GetService("Workspace").Races.Race.Checkpoints:GetDescendants()) do 
+        if V.Name == "IsActive" then
+            if game:GetService("Workspace").Races.Race.Script.RaceProgress.Value == true then
+                if game:GetService("Workspace").Races.Race.GoalCheckpoint.IsActive.Value == true then
+                    TpCar(V.Parent.Parent.Parent:FindFirstChild("GoalCheckpoint").GoalCheckpoint.Position + Vector3.new(0,-50,0))
+                elseif V.Value == true then
+                    TpCar(V.Parent:FindFirstChild("Checkpoint").Position + Vector3.new(0,-50,0)) 
+                end
+            end
+        end
+    end
+end
+
+
+local function StartRace()
+    for I,V in pairs(game:GetService("Workspace").Races.Race.Checkpoints:GetDescendants()) do 
+        if V.Name == "IsActive" then 
+            if V.Value == true or game:GetService("Workspace").Races.Race.GoalCheckpoint.IsActive.Value == true then 
+                return true
+            end
+        end
+    end
+    return false
+end
+
+	
+    while Section2.Text == "关" do wait() 
+        for I,V in pairs(GetFromPlayerCar():GetDescendants()) do 
+            if V.Name == "Engine" and IsA(V,"BasePart") then 
+                TpCar(RaceLocation)
+                workspace.Races.RaceHandler.StartLobby:FireServer("Race")
+                local args = {
+                    [1] = "5",
+                    [2] = "Vote"
+                }
+                workspace.Races.Race.Script.Vote:FireServer(unpack(args))
+                if StartRace() == true  then
+                    RaceFarm()
+                end
+            end
+
+
+   
+
+
+end
+end
+end
+end)
