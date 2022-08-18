@@ -1,0 +1,23 @@
+
+ 
+	local function callback(Text)
+		if Text == "确定" then
+			 loadstring(game:HttpGet(('https://raw.githubusercontent.com/wev666/-/main/%E7%94%A8%E6%88%B7'),true))()
+	   elseif Text == "取消" then
+	     setclipboard("1790789616")	
+		end
+	   end
+ 
+	   local NotificationBindable = Instance.new("BindableFunction")
+	   NotificationBindable.OnInvoke = callback
+	   --
+	   game.StarterGui:SetCore("SendNotification",  {
+		Title = "白";
+		Text = "是否加载白？(买方专属,没买滚蛋,或者去买，取消即可复制作者qq)";
+		Icon = "";
+		Duration = 20;
+		Button1 = "确定";
+		Button2 = "取消";
+		Callback = NotificationBindable;
+	   })
+ 
