@@ -1,0 +1,102 @@
+local Players = game:GetService("Players");     
+local Lighting = game:GetService("Lighting");
+local ReplicatedStorage = game:GetService("ReplicatedStorage");
+
+local ScriptContext = game:GetService("ScriptContext");
+local VRService = game:GetService("VRService");
+local VirtualUser = game:GetService("VirtualUser");
+local RunService = game:GetService("RunService");
+local HttpService = game:GetService("HttpService");
+local UserInputService = game:GetService("UserInputService");
+local MarketplaceService = game:GetService("MarketplaceService");
+local VirtualInputManager = game:GetService("VirtualInputManager")
+local CurrentCamera = workspace.CurrentCamera;
+
+local LocalPlayer = Players.LocalPlayer;
+local PlayerGui = LocalPlayer:FindFirstChildOfClass("PlayerGui")
+local Mouse = LocalPlayer:GetMouse();
+local Character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait(); 
+
+local inGroup = LocalPlayer:IsInGroup(2726951) and true or false
+local VIP = MarketplaceService:UserOwnsGamePassAsync(LocalPlayer.UserId, 2465866) and true or false
+
+local VehicleInformation = ReplicatedStorage:FindFirstChild("VehicleInformation");
+local HelicopterContainer = ReplicatedStorage:FindFirstChild("HelicopterContainer")
+local CarCollection = workspace:FindFirstChild("CarCollection");
+local rF = ReplicatedStorage:FindFirstChild("rF");
+local rE = ReplicatedStorage:FindFirstChild("rE");
+local function getCar()
+    return CarCollection:FindFirstChild(LocalPlayer.Name) and CarCollection[LocalPlayer.Name]:FindFirstChild("Car") or false
+end
+
+local function getbestCar(realname)
+    local bestName = ""
+    local bestPrice = 0
+    for _, car in pairs(VehicleInformation:GetChildren()) do
+        if not VIP and car.VipOnly.Value == true then continue end
+        if not inGroup and car.GroupOnly.Value == true then continue end
+        local name = realname and car:FindFirstChild("Name").Value or car.Name
+        local price = car.Price.Value
+        if price >= bestPrice and price <= LocalPlayer.Money.Value and car.TokenRequirement.Value <= LocalPlayer.leaderstats.Tokens.Value then
+            bestName = name
+            bestPrice = price
+        end
+    end
+    return bestName
+end
+
+local function spawnCar()
+    local bestCar = getbestCar()
+    rF.SpawnVehicle:InvokeServer(bestCar) 
+end
+
+local function bringCar()
+    car = getCar()
+    if not car then return end
+    if not LocalPlayer.Character or not LocalPlayer.Character:FindFirstChild("HumanoidRootPart") then return  end
+    car.PrimaryPart.CFrame = LocalPlayer.Character.HumanoidRootPart.CFrame
+end
+
+local function destroyCar()
+    car = getCar()
+    if not car then return  end
+    if LocalPlayer.Character and LocalPlayer:FindFirstChildOfClass("Humanoid") then 
+        local hum = LocalPlayer:FindFirstChildOfClass("Humanoid")
+        hum.Sit = false 
+        hum.RootPart.Velocity = Vector3.new(0,0,0)
+    end
+	for i = 1,5 do
+        local parts = {}
+        local collision
+        for i,v in pairs(car:GetDescendants()) do
+            if v:IsA("BasePart") then
+                if v.Parent == car.Body.HitBoxes and v:IsA("BasePart") then collision = v end
+                table.insert(parts, v)
+            end
+        end
+        car.PrimaryPart.Velocity = Vector3.new(0,1000,0)--car.PrimaryPart.CFrame.lookVector*1000*Vector3.new(1,0,1)
+        rF.BreakParts:InvokeServer(parts, collision, car.PrimaryPart.Velocity.Magnitude, "Default", car.PrimaryPart.Velocity, false)
+        wait()
+    end
+
+end
+local Library = loadstring(game:HttpGet("https://pastebin.com/raw/UjsFgNr3"))()
+local Window = Library.CreateLib("白", "Ocean")
+local Tab= Window:NewTab("主要功能")
+local Section = Tab:NewSection("汽车菜单")
+Section:NewButton("一键生成汽车", "快速生成汽车", function()
+	spawnCar()
+end)
+Section:NewButton("一键摧毁汽车", "快速摧毁汽车", function()
+	destroyCar()
+end)
+Section:NewButton("一键带来汽车", "快速带来汽车", function()
+	bringCar()
+end)
+Section:NewButton("一键生成+摧毁汽车", "快速生成+摧毁汽车", function()
+  
+	spawnCar()
+	wait(2)
+	destroyCar()
+
+end)
