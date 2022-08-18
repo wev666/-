@@ -1,0 +1,431 @@
+local bai={
+esp=false,
+tpplayername=nil,
+killall=false,
+autopick=false,
+killme=false
+
+
+}
+local function notify(Title,Text,Duration) -- Sends Notification in the bottom right of the screen
+    game.StarterGui:SetCore("SendNotification", {
+        Title = Title;
+        Text = Text;
+        Icon = nil;
+        Duration = Duration
+    })
+end
+
+
+
+
+local Library = loadstring(game:HttpGet("https://pastebin.com/raw/UjsFgNr3"))()
+local Window = Library.CreateLib("白", "Midnight")
+local Tab= Window:NewTab("玩家")
+local Sectionwanjia = Tab:NewSection("速度/跳跃提升/飞行")
+local Tab1= Window:NewTab("主要功能")
+local Sectiontoshi = Tab1:NewSection("透视")
+local Sectionckwj = Tab1:NewSection("瞄准玩家")
+local Sectioncs = Tab1:NewSection("传送")
+local Sectionqt = Tab1:NewSection("其他功能")
+Sectionwanjia:NewTextBox("速度", "使你的速度和输入的速度一样",function(s) 
+ 
+    spawn(function()
+        while task.wait() do
+    game:GetService("Players").LocalPlayer.Character.Humanoid.WalkSpeed = s
+end
+end)
+end)
+
+Sectionwanjia:NewTextBox("跳跃", "使你的跳跃和输入的跳跃一样",  function(s) 
+   
+    spawn(function()
+        while task.wait() do
+    game:GetService("Players").LocalPlayer.Character.Humanoid.JumpPower = s
+end
+end)
+end)
+Sectionwanjia:NewButton("飞行", "飞行脚本", function()
+
+    loadstring("\108\111\97\100\115\116\114\105\110\103\40\103\97\109\101\58\72\116\116\112\71\101\116\40\40\39\104\116\116\112\115\58\47\47\103\105\115\116\46\103\105\116\104\117\98\117\115\101\114\99\111\110\116\101\110\116\46\99\111\109\47\109\101\111\122\111\110\101\89\84\47\98\102\48\51\55\100\102\102\57\102\48\97\55\48\48\49\55\51\48\52\100\100\100\54\55\102\100\99\100\51\55\48\47\114\97\119\47\101\49\52\101\55\52\102\52\50\53\98\48\54\48\100\102\53\50\51\51\52\51\99\102\51\48\98\55\56\55\48\55\52\101\98\51\99\53\100\50\47\97\114\99\101\117\115\37\50\53\50\48\120\37\50\53\50\48\102\108\121\37\50\53\50\48\50\37\50\53\50\48\111\98\102\108\117\99\97\116\111\114\39\41\44\116\114\117\101\41\41\40\41\10\10")()
+
+end)
+Sectiontoshi:NewToggle("透视所有人", "快速查看玩家的职业", function(state)
+    local plrs = game:GetService("Players")
+	local faces = {"Back","Bottom","Front","Left","Right","Top"}
+	function MakeESP()
+		for _, v in pairs(game.Players:GetChildren()) do if v.Name ~= game.Players.LocalPlayer.Name then
+				local bgui = Instance.new("BillboardGui",v.Character.Head)
+				bgui.Name = ("EGUI")
+				bgui.AlwaysOnTop = true
+				bgui.ExtentsOffset = Vector3.new(0,2,0)
+				bgui.Size = UDim2.new(0,200,0,50)
+				local nam = Instance.new("TextLabel",bgui)
+				nam.Text = v.Name
+				nam.BackgroundTransparency = 1
+				nam.TextSize = 15
+				nam.Font = ("GothamBold")
+				nam.TextColor3 = Color3.new(255,255,255)
+				nam.Size = UDim2.new(0,200,0,50)
+				if v.Backpack:FindFirstChild("Gun") or v.Character:FindFirstChild("Gun") then
+					for _, p in pairs(v.Character:GetChildren()) do
+						if p.Name == ("Head") or p.Name == ("Torso") or p.Name == ("Right Arm") or p.Name == ("Right Leg") or p.Name == ("Left Arm") or p.Name == ("Left Leg") then 
+							for _, f in pairs(faces) do
+								local m = Instance.new("SurfaceGui",p)
+								m.Name = ("EGUI")
+								m.Face = f
+								m.AlwaysOnTop = true
+								local mf = Instance.new("Frame",m)
+								mf.Size = UDim2.new(1,0,1,0)
+								mf.BorderSizePixel = 0
+								mf.BackgroundTransparency = 0.5
+								mf.BackgroundColor3 = Color3.new(0,0,255)
+							end
+						end
+					end
+				elseif v.Backpack:FindFirstChild("Knife") or v.Character:FindFirstChild("Knife") then
+					for _, p in pairs(v.Character:GetChildren()) do
+						if p.Name == ("Head") or p.Name == ("Torso") or p.Name == ("Right Arm") or p.Name == ("Right Leg") or p.Name == ("Left Arm") or p.Name == ("Left Leg") then 
+							for _, f in pairs(faces) do
+								local m = Instance.new("SurfaceGui",p)
+								m.Name = ("EGUI")
+								m.Face = f
+								m.AlwaysOnTop = true
+								local mf = Instance.new("Frame",m)
+								mf.Size = UDim2.new(1,0,1,0)
+								mf.BorderSizePixel = 0
+								mf.BackgroundTransparency = 0.5
+								mf.BackgroundColor3 = Color3.new(255,0,0)
+							end
+						end
+					end
+				else
+					for _, p in pairs(v.Character:GetChildren()) do
+						if p.Name == ("Head") or p.Name == ("Torso") or p.Name == ("Right Arm") or p.Name == ("Right Leg") or p.Name == ("Left Arm") or p.Name == ("Left Leg") then 
+							for _, f in pairs(faces) do
+								local m = Instance.new("SurfaceGui",p)
+								m.Name = ("EGUI")
+								m.Face = f
+								m.AlwaysOnTop = true
+								local mf = Instance.new("Frame",m)
+								mf.Size = UDim2.new(1,0,1,0)
+								mf.BorderSizePixel = 0
+								mf.BackgroundTransparency = 0.5
+								mf.BackgroundColor3 = Color3.new(255,255,255)
+							end
+						end
+					end
+				end
+			end
+		end
+	end
+	
+	function ClearESP()
+		for _, v in pairs(game.Workspace:GetDescendants()) do
+			if v.Name == ("EGUI") then
+				v:Remove()
+			end
+		end
+	end
+	
+
+
+    if state then
+      
+        pcall(ClearESP)
+        pcall(MakeESP)
+        while wait(5) do
+            if bai.esp == true then
+                wait(1)
+                pcall(ClearESP)
+                pcall(MakeESP)
+            end
+        end
+    else
+        pcall(ClearESP)
+    end
+end)
+Sectiontoshi:NewButton("重置透视", "重置透视", function()
+    local plrs = game:GetService("Players")
+	local faces = {"Back","Bottom","Front","Left","Right","Top"}
+	function MakeESP()
+		for _, v in pairs(game.Players:GetChildren()) do if v.Name ~= game.Players.LocalPlayer.Name then
+				local bgui = Instance.new("BillboardGui",v.Character.Head)
+				bgui.Name = ("EGUI")
+				bgui.AlwaysOnTop = true
+				bgui.ExtentsOffset = Vector3.new(0,2,0)
+				bgui.Size = UDim2.new(0,200,0,50)
+				local nam = Instance.new("TextLabel",bgui)
+				nam.Text = v.Name
+				nam.BackgroundTransparency = 1
+				nam.TextSize = 15
+				nam.Font = ("GothamBold")
+				nam.TextColor3 = Color3.new(255,255,255)
+				nam.Size = UDim2.new(0,200,0,50)
+				if v.Backpack:FindFirstChild("Gun") or v.Character:FindFirstChild("Gun") then
+					for _, p in pairs(v.Character:GetChildren()) do
+						if p.Name == ("Head") or p.Name == ("Torso") or p.Name == ("Right Arm") or p.Name == ("Right Leg") or p.Name == ("Left Arm") or p.Name == ("Left Leg") then 
+							for _, f in pairs(faces) do
+								local m = Instance.new("SurfaceGui",p)
+								m.Name = ("EGUI")
+								m.Face = f
+								m.AlwaysOnTop = true
+								local mf = Instance.new("Frame",m)
+								mf.Size = UDim2.new(1,0,1,0)
+								mf.BorderSizePixel = 0
+								mf.BackgroundTransparency = 0.5
+								mf.BackgroundColor3 = Color3.new(0,0,255)
+							end
+						end
+					end
+				elseif v.Backpack:FindFirstChild("Knife") or v.Character:FindFirstChild("Knife") then
+					for _, p in pairs(v.Character:GetChildren()) do
+						if p.Name == ("Head") or p.Name == ("Torso") or p.Name == ("Right Arm") or p.Name == ("Right Leg") or p.Name == ("Left Arm") or p.Name == ("Left Leg") then 
+							for _, f in pairs(faces) do
+								local m = Instance.new("SurfaceGui",p)
+								m.Name = ("EGUI")
+								m.Face = f
+								m.AlwaysOnTop = true
+								local mf = Instance.new("Frame",m)
+								mf.Size = UDim2.new(1,0,1,0)
+								mf.BorderSizePixel = 0
+								mf.BackgroundTransparency = 0.5
+								mf.BackgroundColor3 = Color3.new(255,0,0)
+							end
+						end
+					end
+				else
+					for _, p in pairs(v.Character:GetChildren()) do
+						if p.Name == ("Head") or p.Name == ("Torso") or p.Name == ("Right Arm") or p.Name == ("Right Leg") or p.Name == ("Left Arm") or p.Name == ("Left Leg") then 
+							for _, f in pairs(faces) do
+								local m = Instance.new("SurfaceGui",p)
+								m.Name = ("EGUI")
+								m.Face = f
+								m.AlwaysOnTop = true
+								local mf = Instance.new("Frame",m)
+								mf.Size = UDim2.new(1,0,1,0)
+								mf.BorderSizePixel = 0
+								mf.BackgroundTransparency = 0.5
+								mf.BackgroundColor3 = Color3.new(255,255,255)
+							end
+						end
+					end
+				end
+			end
+		end
+	end
+	
+	function ClearESP()
+		for _, v in pairs(game.Workspace:GetDescendants()) do
+			if v.Name == ("EGUI") then
+				v:Remove()
+			end
+		end
+	end
+	
+
+
+    if bai.esp == true then
+        wait(1)
+        pcall(ClearESP)
+        pcall(MakeESP)
+    end
+end)
+local oldList = {
+		
+}
+for i, v in pairs(game:GetService('Players'):GetPlayers()) do
+	table.insert(oldList, v.Name)
+	end
+
+
+	
+  local dropdown = Sectionckwj:NewDropdown("选择玩家","选择玩家名字已开始下面的功能",oldList, function(v)
+	_G.on = true
+		local user = v
+	
+		while _G.on == true do
+			for i,v in pairs(game:GetService("Players"):GetChildren()) do
+				if v.Character:FindFirstChild("HumanoidRootPart") and v.Name == user then
+					repeat
+						local pos = v.Character.HumanoidRootPart.Position
+						workspace.CurrentCamera.CFrame = CFrame.new(workspace.CurrentCamera.CFrame.Position,pos)
+						wait()
+					until v.Character.Humanoid.Health < 1 or _G.on == false
+				end
+			end
+		end
+	end)
+
+  Sectionckwj:NewButton("重置玩家名字", "重新获得服务器玩家名字", function()
+local newList = {	
+	  }
+	for i, v in pairs(game:GetService('Players'):GetPlayers()) do
+		table.insert(newList , v.Name)
+		end
+	
+	dropdown:Refresh(newList)
+  end)
+  Sectionckwj:NewButton("停止", "停止查看玩家", function()
+    _G.on = false
+      end)
+      Sectioncs:NewButton("传送到出生点", "快速传送到出生点", function()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-108.5, 145, 0.6)
+          end)
+          Sectioncs:NewButton("传送到地图", "快速传送地图", function()
+            local Workplace = workspace:GetChildren()
+			
+			for i, Thing in pairs(Workplace) do
+			
+			    local ThingChildren = Thing:GetChildren()
+			    for i, Child in pairs(ThingChildren) do
+			        if Child.Name == "Spawns" then
+			           
+			           game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Child.Spawn.CFrame
+			
+			        end
+			    end
+			end              end)
+            Sectioncs:NewButton("传送到破坏者", "快速传送到破坏者", function()
+                local Players = game:GetService("Players")			
+                for i, player in pairs(Players:GetPlayers()) do
+                    
+                    local bp = player.Backpack:GetChildren()
+                    for i, tool in pairs(bp) do
+                        if tool.Name == "Knife" then
+                                                        
+                            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[tool.Parent.Parent.Name].Character.HumanoidRootPart.CFrame
+                    
+                        end
+                    end
+                
+                end            
+             end)
+             Sectioncs:NewButton("传送到特工", "快速传送到特工", function()
+                local Players = game:GetService("Players")			
+			for i, player in pairs(Players:GetPlayers()) do
+				
+			    local bp = player.Backpack:GetChildren()
+			    for i, tool in pairs(bp) do
+			        if tool.Name == "Gun" then
+													
+				    	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[tool.Parent.Parent.Name].Character.HumanoidRootPart.CFrame
+				
+					end
+				end
+			
+			end       
+             end)
+
+             local dropdown = Sectioncs:NewDropdown("玩家名字","选择玩家名字已开始下面的功能",oldList, function(v)
+               bai.tpplayername=v
+                end)
+            
+              Sectioncs:NewButton("重置玩家名字", "重新获得服务器玩家名字", function()
+            local newList = {	
+                  }
+                for i, v in pairs(game:GetService('Players'):GetPlayers()) do
+                    table.insert(newList , v.Name)
+                    end
+                
+                dropdown:Refresh(newList)
+              end)
+              Sectioncs:NewButton("传送到玩家", "快速传送到玩家旁边", function()
+                local Victim = bai.tpplayername
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players[Victim].Character.HumanoidRootPart.CFrame 
+                  end)
+                  Sectionqt:NewToggle("杀死所有玩家", "杀死所有玩家", function(state)
+                    wait(1)
+                    if state then
+                     bai.killall=true
+                     if game.Players.LocalPlayer.Backpack:FindFirstChild("Knife") ~= nil then 
+	
+                        local Players = game:GetService("Players")	
+                        for i, Victim in pairs(Players:GetPlayers()) do
+                            if Victim.Name ~= game.Players.LocalPlayer.Name then
+                    
+                                repeat wait()
+                                    if bai.killall==true then
+                                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Victim.Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, 1)
+                                    end
+                                until
+                                    Victim.Character.Humanoid.Health == 0
+                    
+                            end
+                        end
+                    
+        else 
+notify("白","你必须是杀手才可以使用",4)
+        end
+                    else
+                       bai.killall=false
+                    end
+                end)
+                Sectionqt:NewToggle("杀死杀手", "杀死杀手", function(state)
+                    wait(1)
+                    if state then
+                     bai.killme=true
+                     local function GetMurderer()
+                        local plrs = game:GetService("Players")
+                        for i,v in pairs(plrs:GetPlayers()) do
+                            if v.Character:FindFirstChild("Knife") or v.Backpack:FindFirstChild("Knife") then
+                                return v
+                            end
+                        end
+                    end
+                     if game.Players.LocalPlayer.Backpack:FindFirstChild("Gun") ~= nil then 
+	
+             
+                        local Murderer = GetMurderer() --// Gets the userdata of the murderer
+                        local pos = Murderer.Character.HumanoidRootPart.Position
+                    repeat
+                        if Murderer ~= nil and bai.killme==true then --// Checking if there actually is a murderer
+                                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = Murderer.Character.HumanoidRootPart.CFrame * CFrame.new(0, 0, 5)
+                                workspace.CurrentCamera.CFrame = Murderer.Character.HumanoidRootPart.CFrame
+                                
+                            end
+                        wait()
+                        until Murderer.Character.Humanoid.Health == 0
+                
+		
+        else 
+notify("白","你必须是特工才可以使用",4)
+        end
+                    else
+                       bai.killall=false
+                    end
+                end)
+                Sectionqt:NewToggle("自动捡起枪", "快速捡起枪", function(state)
+                    if state then
+                     bai.autopick=true
+                     while task.wait() do
+                        if bai.autopick==true then
+                     local currentX = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.X
+                     local currentY = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.Y
+                     local currentZ = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.Z	
+                     
+                     if workspace:FindFirstChild("GunDrop") ~= nil then
+                     
+                         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = workspace:FindFirstChild("GunDrop").CFrame	
+                     wait(.25)	
+                         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(currentX, currentY, currentZ)
+                         end
+                        end
+                    end
+                    else
+                       bai.autopick=false
+                    end
+                end)
+
+
+
+
+
+
+
+
+
+
+
+
+
