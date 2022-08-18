@@ -1,0 +1,177 @@
+local plr = game.Players.LocalPlayer.Character.HumanoidRootPart
+
+function getHighest()
+	local high = {}
+	for i, v in pairs(game:GetService("Workspace").Fight.Chests:GetChildren()) do
+		for a, b in pairs(game:GetService("Workspace").Fight.ClientChests:GetChildren()) do
+			if v.Name == b.Name then
+				table.insert(high,v.ChestHp.Value)
+				table.sort(high, function(a,b) return a > b end)
+			end
+		end
+	end
+
+	for a, b in pairs(game:GetService("Workspace").Fight.Chests:GetChildren()) do
+		if high[1] == b.ChestHp.Value then
+			return b.Name
+		end
+	end    
+end
+
+function getLowest()
+	local low = {}
+	for i, v in pairs(game:GetService("Workspace").Fight.Chests:GetChildren()) do
+		for a, b in pairs(game:GetService("Workspace").Fight.ClientChests:GetChildren()) do
+			if v.Name == b.Name then
+				table.insert(low,v.ChestHp.Value)
+				table.sort(low, function(a,b) return a < b end)
+			end
+		end
+	end
+
+	for a, b in pairs(game:GetService("Workspace").Fight.Chests:GetChildren()) do
+		if low[1] == b.ChestHp.Value then
+			return b.Name
+		end
+	end    
+end
+
+function getNear()
+	local near;
+	local nearr = math.huge
+
+	for i, v in pairs(game:GetService("Workspace").Fight.ClientChests:GetChildren()) do
+		if (plr.Position - v.Root.Position).Magnitude < nearr then
+			near = v
+			nearr = (plr.Position - v.Root.Position).Magnitude
+		end
+	end
+
+	return near
+end
+local Library = loadstring(game:HttpGet("https://textbin.net/raw/t8opsngf6d"))()
+local Window = Library.CreateLib("白", "Ocean")
+local Tab = Window:NewTab("主要功能")
+local Section = Tab:NewSection("自动功能")
+local Section2 = Tab:NewSection("装逼（没有实际作用）")
+
+
+Section:NewToggle("自动打附近的桩", "挂机打附近的桩", function(state)
+
+if Section.Text == "关"
+then Section.Text ="开"
+ 
+else Section.Text ="关"
+end
+ 
+
+while task.wait() do
+	if state then
+    if Section.Text =="关" then
+        pcall(function()
+			local nearest = getNear()
+
+			plr.CFrame = nearest.Root.CFrame * CFrame.new(0,0,10)
+			wait(1)
+
+			workspace.Fight.Events.FightAttack:InvokeServer(0,nearest.Name)   
+
+			repeat task.wait()
+				plr.CFrame = nearest.Root.CFrame * CFrame.new(0,0,10)
+			until nearest.Root == nil 
+		end)
+	
+    end
+    end
+    end
+    end)
+	Section:NewToggle("自动打最大的桩", "自动打最大的桩", function(state)
+		if Section.Text == "关1"
+		then Section.Text ="开1"
+		   
+		else Section.Text ="关1"
+		end
+		 
+		
+        if state then
+		while wait(math.random(1,3)) do
+		    
+			if Section.Text == "关1" then
+                pcall(function()
+                    local highest = getHighest()
+        
+                    plr.CFrame = game:GetService("Workspace").Fight.ClientChests[highest].Root.CFrame * CFrame.new(0,0,10)
+                    wait(.5)
+        
+                    workspace.Fight.Events.FightAttack:InvokeServer(0,highest)
+        
+                    repeat task.wait()
+                        plr.CFrame = game:GetService("Workspace").Fight.ClientChests[highest].Root.CFrame * CFrame.new(0,0,10)
+                    until not game:GetService("Workspace").Fight.ClientChests[highest] 
+                end)
+			end
+		end
+    
+    end
+	end)
+    Section:NewToggle("自动打最小的桩", "快速打最小的桩", function(state)
+        if Section.Text == "关2"
+        then Section.Text ="开2"
+         
+        else Section.Text ="关2"
+        end
+         
+        
+        while task.wait() do
+            if state then
+            if Section.Text =="关2" then
+                pcall(function()
+                    local lowest = getLowest()
+            
+                    plr.CFrame = game:GetService("Workspace").Fight.ClientChests[lowest].Root.CFrame * CFrame.new(0,0,10)
+                    wait(.5)
+            
+                    workspace.Fight.Events.FightAttack:InvokeServer(0,lowest)
+            
+                    repeat task.wait()
+                        plr.CFrame = game:GetService("Workspace").Fight.ClientChests[lowest].Root.CFrame * CFrame.new(0,0,10)
+                    until not game:GetService("Workspace").Fight.ClientChests[lowest] 
+                end) 
+                    end
+                    end
+                    end
+                    end)
+                    Section:NewToggle("自动收集", "收集所有掉落物", function(state)
+                        if Section.Text == "关3"
+                        then Section.Text ="开3"
+                         
+                        else Section.Text ="关3"
+                        end
+                
+                        
+                        while task.wait() do
+                            if state then
+
+                         
+                            if Section.Text =="关3" then
+                                wait()
+                                for i, v in pairs(game:GetService("Workspace").Rewards:GetChildren()) do
+                                    if v ~= nil then
+                                        v.CFrame = plr.CFrame
+                                    end
+                                end
+
+                            end
+                        end
+                        end
+                        end)
+                    Section2:NewButton("解锁所有通行证", "没什么鸟用", function()
+                        local a = require(game:GetService("ReplicatedStorage").CommonLogic.Model.GamePasses)
+                        a.HasGamePass = function() return true end
+                    
+                        game:GetService("Players").LocalPlayer.PlayerGui.MainGui.ScreenGui.MainLeftBarView.FrameChild4.BgTeleport.ImgMask.Visible = falsent("Clicked")
+                    end)
+        
+
+
+
