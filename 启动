@@ -13,7 +13,7 @@
 	   --
 	   game.StarterGui:SetCore("SendNotification",  {
 		Title = "白";
-		Text = "是否加载白？(买方专属,没买滚蛋,或者去买，取消即可复制作者qq)";
+		Text = "是否加载白？(买方没买滚蛋,或者去买，取消即可复制作者qq)";
 		Icon = "";
 		Duration = 20;
 		Button1 = "确定";
