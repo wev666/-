@@ -1,9 +1,12 @@
-local Library = loadstring(game:HttpGet("https://pastebin.com/raw/yEAcdy7g"))()
-local Window = Library.CreateLib("白", "Midnight")
-local Tab = Window:NewTab("主要功能")
-local Tab1 = Window:NewTab("恶心人功能")
-local Section = Tab:NewSection("娱乐功能")
-Section:NewButton("身体变大", "ButtonInfo", function()
+local bailib = loadstring(game:HttpGet"https://pastebin.com/raw/0bVd8pmH")()
+local win = bailib:Window("白脚本")
+local Tab = win:Server("主要功能", "http://www.roblox.com/asset/?id=6031075938")
+local Tab1 = win:Server("恶心人功能", "http://www.roblox.com/asset/?id=6031075938")
+local Section = Tab:Channel("娱乐功能")
+local Section1 = Tab:Channel("其他功能")
+local Section2 = Tab:Channel("飞行功能")
+local Section3 = Tab1:Channel("恶心人功能")
+Section:Button("身体变大", function()
     local LocalPlayer = game:GetService("Players").LocalPlayer
     local Character = LocalPlayer.Character
     local Humanoid = Character:FindFirstChildOfClass("Humanoid")
@@ -57,7 +60,7 @@ Section:NewButton("身体变大", "ButtonInfo", function()
     Humanoid:FindFirstChild("HeadScale"):Destroy()
     wait(1)
 end)
-Section:NewButton("无跌落伤害", "ButtonInfo", function()
+Section:Button("无跌落伤害", function()
     if game:GetService("Workspace")[plr.Name]:FindFirstChild("FallDamageScript") then
         game:GetService("Workspace")[plr.Name]:FindFirstChild("FallDamageScript"):Destroy()
         game.StarterGui:SetCore("SendNotification", {
@@ -66,22 +69,21 @@ Section:NewButton("无跌落伤害", "ButtonInfo", function()
         })        
     end
 end)
-local Section1 = Tab:NewSection("其他功能")
-Section1:NewTextBox("调整速度", "TextboxInfo", function(txt)
-	game:GetService("Players").LocalPlayer.Character.Humanoid.WalkSpeed = txt
+Section1:Textbox("调整速度","输入数字",true,function(t)
+    game:GetService("Players").LocalPlayer.Character.Humanoid.WalkSpeed = t
 end)
-Section1:NewTextBox("调整跳跃力量", "TextboxInfo", function(ty)
-	game:GetService("Players").LocalPlayer.Character.Humanoid.JumpPower = ty
+Section1:Textbox("调整跳跃力量","输入数字",true,function(ty)
+    game:GetService("Players").LocalPlayer.Character.Humanoid.JumpPower = ty
 end)
-Section1:NewButton("穿墙", "ButtonInfo", function()
+Section1:Button("穿墙", function(boolrfq)
     getgenv().trfffffinketcs = boolrfq
-        game:GetService("RunService").RenderStepped:Connect(function()
+    game:GetService("RunService").RenderStepped:Connect(function()
 if getgenv().trfffffinketcs then
-        game.Players.LocalPlayer.Character.Humanoid:ChangeState(11)
-        end
+    game.Players.LocalPlayer.Character.Humanoid:ChangeState(11)
+    end
 end)
 end)
-Section:NewButton("复制别人物品", "ButtonInfo", function()
+Section:Button("复制别人物品", function()
     local player = tostring(game.Players.LocalPlayer.Name)
     while true do
     if game.Workspace:FindFirstChild("GreenBalloon") then
@@ -105,20 +107,21 @@ Section:NewButton("复制别人物品", "ButtonInfo", function()
     wait()
 end
 end)
-Section1:NewToggle("免费选地图", "ToggleInfo", function(state)
-    
-        getgenv().trink545ets = state
-        if getgenv().trink545ets then
-            TextLabel = game:GetService("Players").LocalPlayer.PlayerGui.MainGui.MapVotePage
-        TextLabel.Visible = true
-        else
-            TextLabel = game:GetService("Players").LocalPlayer.PlayerGui.MainGui.MapVotePage
-        TextLabel.Visible = false
-        end
-        
-end)
-Section1:NewToggle("灾难预测", "ToggleInfo", function(state)
-        getgenv().trincckets = state
+Section1:Toggle("免费选地图",false,function(bool)
+    getgenv().trink545ets = bool
+    if getgenv().trink545ets then
+        TextLabel = game:GetService("Players").LocalPlayer.PlayerGui.MainGui.MapVotePage
+    TextLabel.Visible = true
+    else
+        TextLabel = game:GetService("Players").LocalPlayer.PlayerGui.MainGui.MapVotePage
+    TextLabel.Visible = false
+    end
+    end)
+
+
+
+Section1:Toggle("灾难预测",false,function(bool)
+    getgenv().trincckets = bool
         if getgenv().trincckets then
             local Character = game:GetService("Players").LocalPlayer.Character
         local Tag = Character:FindFirstChild("SurvivalTag")
@@ -148,14 +151,13 @@ Section1:NewToggle("灾难预测", "ToggleInfo", function(state)
         )
         end 
 end)
-Section:NewButton("传送回出生点", "ButtonInfo", function()
+Section:Button("传送回出生点", function()
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-243, 194, 331)
 end)
-Section:NewButton("传送到地图", "ButtonInfo", function()
+Section:Button("传送到地图", function()
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-117, 47, 5)
 end)
-local Section2 = Tab:NewSection("飞行功能")
-Section2:NewTextBox("飞行速度", "输入飞行速度", function(x)
+Section2:Textbox("飞行速度","输入飞行速度",true,function(x)
     while( true )
     do
         game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
@@ -172,8 +174,8 @@ Section2:NewTextBox("飞行速度", "输入飞行速度", function(x)
             BV.Velocity = game.Workspace.CurrentCamera.CFrame.LookVector * x
             end
 end)
-Section2:NewToggle("飞行开关", "ToggleInfo", function(state)
-    if state then
+Section2:Toggle("飞行开关",false,function(bool)
+    if bool then
         local BV = Instance.new("BodyVelocity",game.Players.LocalPlayer.Character.HumanoidRootPart)
 		local BG = Instance.new("BodyGyro",game.Players.LocalPlayer.Character.HumanoidRootPart)
 		BG.MaxTorque = Vector3.new(math.huge,math.huge,math.huge)
@@ -186,14 +188,13 @@ Section2:NewToggle("飞行开关", "ToggleInfo", function(state)
 		game.Players.LocalPlayer.Character.HumanoidRootPart:FindFirstChildOfClass("BodyGyro"):Destroy()
     end
 end)
-Section2:NewButton("飞行食用说明", "ButtonInfo", function()
+Section2:Button("飞行食用说明", function()
     game:GetService("StarterGui"):SetCore("SendNotification",{     
         Title = "说明",     
         Text =   "1，飞行速度不能超过50超过就会白给2，要先输入飞行速度再开启飞行",
         Button1 = "知道了", Duration = 30, })
 end)
-local Section = Tab1:NewSection("甩人")
-Section:NewButton("打开甩人脚本", "", function()
+Section3:Button("打开甩人脚本", function()
     local ultimateFling = Instance.new("ScreenGui")
     local drag = Instance.new("Frame")
     local UICorner = Instance.new("UICorner")
@@ -692,43 +693,31 @@ Section:NewButton("打开甩人脚本", "", function()
         end
         ultimateFling:Destroy()
     end)
+    end)
+  
+    local DFFD2R = {Players=game:GetService('Players')}
+    local Players = Section3:Dropdown("玩家列表", {},function(bai)
+        DFFD2R.playernamedied = bai
+    end)
     
-end)
-local Section = Tab1:NewSection("传送功能")
-local DFFD2R = {
-    Players=game:GetService('Players'),
-    }
-local oldList = {
- 
-}
-for i, v in pairs(game:GetService('Players'):GetPlayers()) do
-	table.insert(oldList, v.Name)
-	end
- 
- 
-	  local newList = {
- 
-	  }
-  local dropdown = Section:NewDropdown("玩家名字","选择玩家名字已开始下面的功能",oldList, function(v)
-	DFFD2R.playernamedied=v
-  end)
-  Section:NewButton("重置玩家名字", "重新获得服务器玩家名字", function()
-local newList = {	
-	  }
-	for i, v in pairs(game:GetService('Players'):GetPlayers()) do
-		table.insert(newList , v.Name)
-		end
- 
-	dropdown:Refresh(newList)
-  end)
-  Section:NewButton("传送到玩家旁边", "出现在玩家旁边", function()
-	local nb = game.Players.LocalPlayer.Character.HumanoidRootPart
-	local tp_player = game:GetService("Players")[DFFD2R.playernamedied]
- 
-    if tp_player then
-            for i = 1,5 do
-        wait()
-        nb.CFrame = tp_player.Character.HumanoidRootPart.CFrame + Vector3.new(0, 3, 0)
+    local function abb()
+        Players:Clear()
+        for i, Player in pairs(game:GetService('Players'):GetPlayers()) do
+            Players:Add(Player.Name)
         end
-	end
-end)
+    end
+    
+    
+    abb()
+    Section3:Button("刷新玩家列表", abb)
+    
+    Section3:Button("传送到玩家旁边",function()
+        local HumRoot = game.Players.LocalPlayer.Character.HumanoidRootPart
+        local tp_player = game:GetService("Players")[DFFD2R.playernamedied]
+        if tp_player then
+            for i = 1,5 do
+                wait()
+                HumRoot.CFrame = tp_player.Character.HumanoidRootPart.CFrame + Vector3.new(0, 3, 0)
+            end
+        end
+    end)   
